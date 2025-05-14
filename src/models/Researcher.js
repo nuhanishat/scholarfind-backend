@@ -28,7 +28,11 @@ const researcherSchema = new mongoose.Schema({
     email: {
         type: String,
         default: '',
-     },
+    },
+    image: {
+        type: String,
+        default: '',
+    },
     details: {
         qualifications: {
             type: String,

@@ -25,6 +25,7 @@ export const postNewResearcher = async (req, res) => {
         university: req.body.university,
         field: req.body.field || '',
         email: req.body.email || '',
+        image: req.body.image || '',
         details: {
             qualifications: detailsData.qualifications || '',
             researchGroups: detailsData.researchGroups || [],
