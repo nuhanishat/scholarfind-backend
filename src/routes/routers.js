@@ -1,4 +1,4 @@
-import { getAllResearchers, postNewResearcher, updateResearcher } from '../controllers/controllers';
+import { deleteResearcher, getAllResearchers, postNewResearcher, updateResearcher } from '../controllers/controllers';
 
 const Researcher = require('../models/Researcher');
 
@@ -14,5 +14,9 @@ export const routes = (app) => {
     // PUT: update existing researcher info
     app.route('/api/researchers/update')
         .put(updateResearcher);
+    
+    //DELETE: delete an entry
+    app.route('/api/researchers/delete')
+        .delete(deleteResearcher);
     
 }

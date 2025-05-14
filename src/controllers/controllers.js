@@ -93,3 +93,26 @@ export const updateResearcher = async (req, res) => {
     }
 }
 
+export const deleteResearcher = async (req, res) => {
+    const { firstName, lastName, university } = req.body;
+
+    console.log(`[API][DELETE] Received request to delete researcher: ${lastName}, ${firstName}`);
+
+    try {
+        const researcher = await Researcher.findOne({ lastName: lastName, firstName: firstName, university: university })
+        if (!researcher) {
+            return res.status(404).json({ message: '[API][DELETE] Researcher not found'})
+        }
+        console.log(`[API][DELETE] Researcher found! : ${firstName} ${lastName} @ ${university}`);
+    
+        await Researcher.deleteOne({ _id: researcher._id })
+        console.log(`[API][DELETE] Researcher deleted : ${firstName} ${lastName} @ ${university}`);
+        res.status(200).json({message: `Reseacher ${firstName} ${lastName} @ ${university} deleted!`});
+
+    } catch (err) {
+        res.status(500).json({ message: '[API][DELETE] Error deleting researcher', error: err.message });
+    }
+    
+
+}
+
