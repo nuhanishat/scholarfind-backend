@@ -1,23 +1,74 @@
 import mongoose from "mongoose";
 
 const researcherSchema = new mongoose.Schema({
-    name: String,
-    university: String,
-    field: String,
-    email: String,
+    firstName: {
+        type: String,
+        required: true,
+    },
+    lastName: {
+        type: String,
+        required: true,
+    },
+    title: {
+        type: String,
+        required: true,
+    },
+    department: {
+        type: String,
+        default: '',
+    },
+    university: {
+        type: String,
+        required: true,
+    },
+    field: {
+        type: String,
+        default: '',
+    },
+    email: {
+        type: String,
+        default: '',
+     },
     details: {
-        qualifications: String,
-        researchGroups: String,
-        biography: String,
-        awards: String,
-        additionalInfo: String
+        qualifications: {
+            type: String,
+            default: '',
+         },
+        researchGroups: {
+            type: [String],
+            default: [],
+         },
+        biography: {
+            type: String,
+            default: '',
+         },
+        awards: {
+            type: [String],
+            default: [],
+         },
+        additionalInfo: {
+            type: String,
+            default: '',
+         }
     },
     socials: {
-        linkedin: String,
-        researchgate: String,
-        universityWebsite: String,
+        linkedin: {
+            type: String,
+            default: '',
+         },
+        researchgate: {
+            type: String,
+            default: '',
+         },
+        universityWebsite: {
+            type: String,
+            default: '',
+         },
     },
-    fundingAvailable: Boolean
+    fundingAvailable: {
+        type: Boolean,
+        default: false,
+    }
 });
 
 module.exports = mongoose.model('Researcher', researcherSchema);

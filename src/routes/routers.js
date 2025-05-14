@@ -1,17 +1,18 @@
-const express = require('express');
-const router = express.Router();
+import { getAllResearchers, postNewResearcher, updateResearcher } from '../controllers/controllers';
+
 const Researcher = require('../models/Researcher');
 
-//Get all researchers
-router.get('/', async (req, res) => {
-    const researchers = await Researcher.find();
-    res.json(researchers);
-});
-
-router.post('/', async (req, res) => {
-    const newResearcher = new Researcher(req.body);
-    await newResearcher.save();
-    res.status(201).json(newResearcher);
-});
-
-module.exports = router;
+export const routes = (app) => {
+    // GET: get all researchers 
+    app.route('/api/researchers')
+        .get(getAllResearchers) 
+        
+    // POST: add new researchers
+    app.route('/api/researchers/add')
+        .post(postNewResearcher);
+    
+    // PUT: update existing researcher info
+    app.route('/api/researchers/update')
+        .put(updateResearcher);
+    
+}

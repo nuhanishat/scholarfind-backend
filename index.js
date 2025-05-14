@@ -1,28 +1,37 @@
+require('dotenv').config();
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
+import { routes } from "./src/routes/routers";
+
 
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
+const PORT = 6003;
 
 //Middleare
-app.use(express.json());
-app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 
 //Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => console.log('Connected to MongoDB connected'))
-.catch(err => console.error('MongoDB connection error', err));
+mongoose.connect(process.env.MONGODB_URI)
+.then(() => console.log('[MONGOOSE] Connected to MongoDB connected'))
+.catch(err => console.error('[MONGOOSE] MongoDB connection error', err));
 
 //Define routes
-app.use('/api/researchers', researchersRouter);
+routes(app);
 
-const PORT = 7000;
+app.use((req, res, next) => {
+    console.log(`[SERVER][${new Date().toISOString()}] ${req.method} ${req.originalUrl}`)
+    next();
+})
+
+app.get('/api', (req, res) => {
+    res.send(`[API] Server is running on PORT:${PORT}`)
+})
+
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)
+    console.log(`[SERVER] Server running on port ${PORT}`)
 })
